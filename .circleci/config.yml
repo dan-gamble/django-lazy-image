@@ -77,11 +77,12 @@ workflows:
   version: 2
   test:
     jobs:
-      - build:
-          branches:
-            ignore:
-              - master
-
+      - test_dev:
+          filters:
+            branches:
+              only:
+                - develop
+                - /feature-.*/
 
   build_and_deploy:
     jobs:
