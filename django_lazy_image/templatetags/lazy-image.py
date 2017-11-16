@@ -93,7 +93,7 @@ def lazy_image(image, height=None, width=None, blur=True, max_width=1920, crop=N
         'web': webp,
         'webp_url': webp_url,
         'webp_url_2x': webp_url_2x,
-        'blur': blur
+        'blur': False if str(image.file).endswith('.png') else blur
     }
 
 
