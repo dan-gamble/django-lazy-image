@@ -11,7 +11,7 @@ clean:
 	rm -rf dist/* build/*
 
 dev:
-  pip install twine
+	pip install twine
 	pip install -e .[testing]
 
 docs:
