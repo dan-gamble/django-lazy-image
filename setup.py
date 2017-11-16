@@ -3,7 +3,7 @@ import sys
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 
-VERSION = '0.0.3'
+VERSION = '0.0.4'
 
 def readme():
     """print long description"""
