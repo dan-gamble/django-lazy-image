@@ -1,6 +1,7 @@
 import os
 import sys
-from setuptools import setup, find_packages
+
+from setuptools import find_packages, setup
 from setuptools.command.install import install
 
 VERSION = '0.0.4'
