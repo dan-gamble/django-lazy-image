@@ -38,7 +38,7 @@ setup(
         'django>=1.11,<1.12',
         'django-jinja>=2.2',
     ],
-    extra_require={
+    extras_require={
         'testing': [
             'coveralls',
             'pytest',
