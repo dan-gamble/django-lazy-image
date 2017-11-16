@@ -1,5 +1,3 @@
-from django.conf import settings
-
 # The default quality settings passed to Sorl
 LAZY_IMAGE_DEFAULT_QUALITY_OPTIONS = {
     'normal': 60,

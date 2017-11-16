@@ -1,3 +1,5 @@
+# pylint: disable=too-complex, too-many-arguments, too-many-locals
+
 from django.core.urlresolvers import reverse
 from django_jinja import library
 from sorl.thumbnail import get_thumbnail
@@ -5,14 +7,15 @@ from sorl.thumbnail import get_thumbnail
 from ..conf import settings
 
 @library.global_function
-def lazy_image(image, height=None, width=None, blur=True, max_width=1920, crop=None, quality=settings.LAZY_IMAGE_DEFAULT_QUALITY, webp=settings.LAZY_IMAGE_ENABLE_WEBP):
-    user_quality = quality != settings.LAZY_IMAGE_DEFAULT_QUALITY
+def lazy_image(
+        image, height=None, width=None, blur=True, max_width=1920, crop=None,
+        quality=settings.LAZY_IMAGE_DEFAULT_QUALITY, webp=settings.LAZY_IMAGE_ENABLE_WEBP):
     user_sized = height and width
     reverse_url = '{}:thumbnail'.format(settings.LAZY_IMAGE_URL_NAMESPACE)
 
-    if type(quality) == int:
+    if isinstance(quality, int):
         normal_quality = webp_quality = quality
-    elif type(quality) == dict:
+    elif isinstance(quality, dict):
         try:
             normal_quality = quality['normal']
             webp_quality = quality['webp']
@@ -99,7 +102,8 @@ def lazy_image(image, height=None, width=None, blur=True, max_width=1920, crop=N
 
 @library.global_function
 @library.render_with('django_lazy_image/lazy-image.html')
-def render_lazy_image(image, height=None, width=None, blur=True, max_width=1920, crop=None, quality=settings.LAZY_IMAGE_DEFAULT_QUALITY, webp=settings.LAZY_IMAGE_ENABLE_WEBP):
+def render_lazy_image(image, height=None, width=None, blur=True, max_width=1920, crop=None,
+                      quality=settings.LAZY_IMAGE_DEFAULT_QUALITY, webp=settings.LAZY_IMAGE_ENABLE_WEBP):
     """
     Usage: {{ render_lazy_image(path.to.image) }}
     """

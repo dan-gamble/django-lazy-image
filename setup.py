@@ -1,15 +1,36 @@
 import os
+import sys
 from setuptools import setup, find_packages
+from setuptools.command.install import install
 
-with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
-    README = readme.read()
+VERSION = '0.0.3'
+
+def readme():
+    """print long description"""
+    with open('README.md') as f:
+        return f.read()
+
+class VerifyVersionCommand(install):
+    """Custom command to verify that the git tag matches our version"""
+    description = 'verify that the git tag matches our version'
+
+    def run(self):
+        tag = os.getenv('CIRCLE_TAG')
+
+        if tag != VERSION:
+            info = "Git tag: {0} does not match the version of this app: {1}".format(
+                tag, VERSION
+            )
+            sys.exit(info)
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-lazy-image',
-    version='0.0.3',
+    version=VERSION,
+    description='An image utility that renders images lazily as well as intrinsically sizes them.',
+    long_description=readme(),
     packages=find_packages(),
     install_requires=[
         'sorl-thumbnail',
@@ -17,18 +38,30 @@ setup(
         'django>=1.11,<1.12',
         'django-jinja>=2.2',
     ],
+    extra_require={
+        'testing': [
+            'coveralls',
+            'pytest',
+            'pytest-cov',
+            'pytest-django',
+            'pylint',
+            'pylint-django',
+            'pylint-mccabe',
+            'isort',
+        ],
+    },
     include_package_data=True,
-    description='An image utility that renders images lazily as well as intrinsically sizes them.',
-    long_description=README,
     url='https://github.com/dan-gamble/django-lazy-image/',
     author='Dan Gamble',
     author_email='dan@dangamble.co.uk',
+    python_requires='>=3',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: Django :: 1.11',
         'Intended Audience :: Developers',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3 :: Only",
     ],
 )
