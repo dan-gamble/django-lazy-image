@@ -4,7 +4,7 @@ import sys
 from setuptools import find_packages, setup
 from setuptools.command.install import install
 
-VERSION = '0.0.5'
+VERSION = '0.0.6'
 
 def readme():
     """print long description"""
@@ -65,4 +65,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3 :: Only",
     ],
+    cmdclass={
+        'verify': VerifyVersionCommand,
+    },
 )
