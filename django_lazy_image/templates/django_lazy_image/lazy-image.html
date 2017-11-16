@@ -1,0 +1,24 @@
+<div class="img-Image js-LazyImage">
+  <div class="img-Image_AspectRatioHolder">
+    <div class="img-Image_AspectRatio" style="padding-bottom: {{ aspect_ratio }}"></div>
+
+    <div class="img-Image_Media">
+      <img class="img-Image_Image img-Image_Image-small img-Image_Image-loaded{% if blur %}  img-Image_Image-blurred{% endif %}" alt="" src="{{ small_image_url }}">
+      <picture>
+        {% if webp %}
+          <source srcset="{{ webp_url }}, {{ webp_url_2x }} 2x" type="image/webp">
+        {% endif %}
+        <source srcset="{{ original_large_image_url }}, {{ original_large_image_url_2x }} 2x">
+        <img alt="{{ alt_text }}"
+             data-src="{{ original_large_image_url }}, {{ original_large_image_url_2x }} 2x"
+             class="img-Image_Image">
+      </picture>
+      <noscript class="img-Image_Noscript">
+        <img alt="{{ alt_text }}"
+             src="{{ webp_url if webp else original_large_image_url }}"
+             srcset="{{ webp_url_2x if webp else original_large_image_url_2x }} 2x"
+             class="img-Image_Image img-Image_Image-large img-Image_Image-loaded">
+      </noscript>
+    </div>
+  </div>
+</div>
