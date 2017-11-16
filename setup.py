@@ -1,9 +1,10 @@
 import os
 import sys
-from setuptools import setup, find_packages
+
+from setuptools import find_packages, setup
 from setuptools.command.install import install
 
-VERSION = '0.0.4'
+VERSION = '0.0.5'
 
 def readme():
     """print long description"""
@@ -38,7 +39,7 @@ setup(
         'django>=1.11,<1.12',
         'django-jinja>=2.2',
     ],
-    extra_require={
+    extras_require={
         'testing': [
             'coveralls',
             'pytest',
