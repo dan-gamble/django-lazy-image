@@ -2,11 +2,8 @@ import json
 import os
 import sys
 
-from pynpm import YarnPackage
 from setuptools import find_packages, setup
 from setuptools.command.install import install
-
-pkg = YarnPackage('package.json')
 
 with open('package.json') as f:
     VERSION = json.load(f)['version']
