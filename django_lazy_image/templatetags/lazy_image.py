@@ -94,7 +94,7 @@ def lazy_image(
         'small_image_url': small_image_url,
         'original_large_image_url': original_large_image_url,
         'original_large_image_url_2x': original_large_image_url_2x,
-        'web': webp,
+        'webp': webp,
         'webp_url': webp_url,
         'webp_url_2x': webp_url_2x,
         'blur': False if str(image.file).endswith('.png') else blur
