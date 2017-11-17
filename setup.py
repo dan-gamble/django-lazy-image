@@ -1,10 +1,15 @@
+import json
 import os
 import sys
 
+from pynpm import YarnPackage
 from setuptools import find_packages, setup
 from setuptools.command.install import install
 
-VERSION = '0.0.11'
+pkg = YarnPackage('package.json')
+
+with open('package.json') as f:
+    VERSION = json.load(f)['version']
 
 def readme():
     """print long description"""
