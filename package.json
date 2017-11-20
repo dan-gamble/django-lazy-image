@@ -7,6 +7,8 @@
   "author": "Dan Gamble <dan@dangamble.co.uk>",
   "license": "MIT",
   "scripts": {
+    "build:all": "yarn run build:css && yarn run build:module && yarn run build:web",
+    "build:css": "cp -r assets/css dist",
     "build:module": "rollup -c .config/rollup.js",
     "build:web": "rollup -c .config/rollup.web.js"
   },
