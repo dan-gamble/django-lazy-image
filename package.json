@@ -7,9 +7,11 @@
   "author": "Dan Gamble <dan@dangamble.co.uk>",
   "license": "MIT",
   "scripts": {
-    "build:all": "yarn run build:css && yarn run build:module && yarn run build:web",
-    "build:css": "cp -r assets/css dist",
+    "build:all": "yarn run build:css:npm && yarn run build:css:pypi && yarn run build:module && yarn run build:python && yarn run build:web",
+    "build:css:npm": "cp -r assets/css dist",
+    "build:css:pypi": "cp -r assets/css django_lazy_image/static/django_lazy_image",
     "build:module": "rollup -c .config/rollup.js",
+    "build:python": "rollup -c .config/rollup.python.js",
     "build:web": "rollup -c .config/rollup.web.js"
   },
   "devDependencies": {

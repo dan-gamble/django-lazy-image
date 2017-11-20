@@ -1,0 +1,85 @@
+/*
+|--------------------------------------------------------------------------
+| Image
+|--------------------------------------------------------------------------
+| @namespace: img-
+|
+*/
+.img-Image {
+  position: relative;
+
+  margin: 0;
+
+  background-color: #0e0e0e;
+  overflow: hidden;
+}
+
+.img-Image_Media {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+.img-Image_Image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
+
+  transition: opacity 0.5s linear;
+
+  @supports (object-fit: cover) {
+    object-fit: cover;
+  }
+}
+
+.img-Image_Image-noObjectFit {
+  display: block;
+
+  background-position: center;
+  background-size: cover;
+
+  animation: FadeIn 0.3s ease;
+
+  @supports (object-fit: cover) {
+    display: none;
+  }
+}
+
+.img-Image_Image-small {
+  /* stylelint-disable */
+  _:-ms-fullscreen, :root & {
+    opacity: 0;
+  }
+  /* stylelint-enable */
+}
+
+.img-Image_Image-blurred {
+  filter: blur(50px);
+
+  transform: scale(1);
+}
+
+.img-Image_Image-loaded {
+  opacity: 1;
+}
+
+.img-Image_Image-hide {
+  opacity: 0;
+}
+
+@keyframes FadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
