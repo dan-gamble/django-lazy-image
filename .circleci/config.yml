@@ -73,7 +73,7 @@ jobs:
             . venv/bin/activate
             twine upload dist/*
 
-  deploy_pypi:
+  deploy_npm:
     docker:
       - image: circleci/node:8.9
     steps:
@@ -87,15 +87,16 @@ jobs:
           command: |
             yarn install
 
+      - run:
+          name: npm login
+          command: |
+            yarn add global npm-cli-login
+            npm-cli-login -u $NPM_USERNAME -p $NPM_PASSWORD -e $NPM_EMAIL
+
       - save_cache:
           key: v1-dependency-cache-{{ checksum "yarn.lock" }}-{{ checksum "Makefile" }}
           paths:
             - "node_modules"
-
-      - run:
-          name: npm login
-          command: |
-            echo -e "$NPM_USERNAME\n$NPM_PASSWORD\n$NPM_EMAIL" | npm login
 
       - run:
           name: upload to npm
