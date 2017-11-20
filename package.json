@@ -1,12 +1,14 @@
 {
   "name": "django-lazy-image",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "An image utility that renders images lazily as well as intrinsically sizes them.",
   "main": "dist/js/lazy-image.js",
   "repository": "git@github.com:dan-gamble/django-lazy-image.git",
   "author": "Dan Gamble <dan@dangamble.co.uk>",
   "license": "MIT",
   "scripts": {
+    "build:all": "yarn run build:css && yarn run build:module && yarn run build:web",
+    "build:css": "cp -r assets/css dist",
     "build:module": "rollup -c .config/rollup.js",
     "build:web": "rollup -c .config/rollup.web.js"
   },

@@ -1,0 +1,2 @@
+django-lazy-image==0.0.2
+pynpm==0.1.1

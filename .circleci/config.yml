@@ -27,7 +27,7 @@ jobs:
             . venv/bin/activate
             make test
 
-  deploy:
+  deploy_pypi:
     docker:
       - image: circleci/python:3.6
     steps:
@@ -73,6 +73,35 @@ jobs:
             . venv/bin/activate
             twine upload dist/*
 
+  deploy_pypi:
+    docker:
+      - image: circleci/node:8.9
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: v1-dependency-cache-{{ checksum "yarn.lock" }}-{{ checksum "Makefile" }}
+
+      - run:
+          name: install npm dependencies
+          command: |
+            yarn install
+
+      - save_cache:
+          key: v1-dependency-cache-{{ checksum "yarn.lock" }}-{{ checksum "Makefile" }}
+          paths:
+            - "node_modules"
+
+      - run:
+          name: npm login
+          command: |
+            echo -e "$NPM_USERNAME\n$NPM_PASSWORD\n$NPM_EMAIL" | npm login
+
+      - run:
+          name: upload to npm
+          command: |
+            npm publish
+
 workflows:
   version: 2
   build_and_deploy:
@@ -81,9 +110,17 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - deploy:
+      - deploy_pypi:
           requires:
             - build
+          filters:
+            tags:
+              only: /[0-9]+(\.[0-9]+)*/
+            branches:
+              ignore: /.*/
+      - deploy_npm:
+          requires:
+            - deploy_pypi
           filters:
             tags:
               only: /[0-9]+(\.[0-9]+)*/
