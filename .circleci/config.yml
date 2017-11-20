@@ -90,7 +90,7 @@ jobs:
       - run:
           name: npm login
           command: |
-            yarn add global npm-cli-login
+            yarn global add npm-cli-login
             npm-cli-login -u $NPM_USERNAME -p $NPM_PASSWORD -e $NPM_EMAIL
 
       - save_cache:
