@@ -28,6 +28,15 @@ INSTALLED_APPS = [
 ]
 ```
 
+Add `url(r'^assets/', include('django_lazy_image.urls', namespace='assets')),` to your base `urls.py`
+
+```python
+urlpatterns = [
+    ...
+    url(r'^assets/', include('django_lazy_image.urls', namespace='assets')),
+    ...
+```
+
 Then there are 2 ways to use the static files with Django:
 
 ### NPM (The preferred way)
