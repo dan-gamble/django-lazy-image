@@ -2,7 +2,6 @@
 
 from django.core.urlresolvers import reverse
 from django_jinja import library
-from sorl.thumbnail import get_thumbnail
 
 from ..conf import settings
 
