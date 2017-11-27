@@ -17,6 +17,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   git flow release start $VERSION
   npm version $VERSION
   npm run build:all
+  git add .
   git commit --amend --no-edit
   git flow release publish $VERSION
   git flow release finish -m "$VERSION" $VERSION
