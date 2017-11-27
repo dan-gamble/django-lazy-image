@@ -83,7 +83,24 @@ def lazy_image(
     }) if webp else None
 
     try:
-        small_image_url = get_thumbnail(image.file, str(int(width / 20))).url
+        if webp:
+            small_image_url = reverse(reverse_url, kwargs={
+                'pk': image.pk,
+                'width': int(round(width / 20)),
+                'height': int(round(height / 20)),
+                'format': 'webp',
+                'crop': crop,
+                'quality': 100,
+            })
+        else:
+            small_image_url = reverse(reverse_url, kwargs={
+                'pk': image.pk,
+                'width': int(round(width / 20)),
+                'height': int(round(height / 20)),
+                'format': 'source',
+                'crop': crop,
+                'quality': 100,
+            })
     except ValueError:
         # Guard against really tiny images, i.e. width / 20 results in 0.
         small_image_url = original_large_image_url
@@ -97,7 +114,8 @@ def lazy_image(
         'webp': webp,
         'webp_url': webp_url,
         'webp_url_2x': webp_url_2x,
-        'blur': False if str(image.file).endswith('.png') else blur
+        'blur': blur,
+        'is_transparent': str(image.file).endswith('.png'),
     }
 
 
