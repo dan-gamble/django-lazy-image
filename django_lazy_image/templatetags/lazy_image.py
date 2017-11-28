@@ -8,7 +8,7 @@ from ..conf import settings
 
 @library.global_function
 def lazy_image(
-        image, height=None, width=None, blur=True, max_width=1920, crop=None,
+        image, height=None, width=None, blur=True, max_width=1920, crop=None, show_small_image=True,
         quality=settings.LAZY_IMAGE_DEFAULT_QUALITY, webp=settings.LAZY_IMAGE_ENABLE_WEBP):
     user_sized = height and width
     reverse_url = '{}:thumbnail'.format(settings.LAZY_IMAGE_URL_NAMESPACE)
@@ -114,16 +114,17 @@ def lazy_image(
         'webp_url': webp_url,
         'webp_url_2x': webp_url_2x,
         'blur': blur,
+        'show_small_image': show_small_image,
         'is_transparent': str(image.file).endswith('.png'),
     }
 
 
 @library.global_function
 @library.render_with('django_lazy_image/lazy-image.html')
-def render_lazy_image(image, height=None, width=None, blur=True, max_width=1920, crop=None,
+def render_lazy_image(image, height=None, width=None, blur=True, max_width=1920, crop=None, show_small_image=True,
                       quality=settings.LAZY_IMAGE_DEFAULT_QUALITY, webp=settings.LAZY_IMAGE_ENABLE_WEBP):
     """
     Usage: {{ render_lazy_image(path.to.image) }}
     """
 
-    return lazy_image(image, height, width, blur, max_width, crop, quality, webp)
+    return lazy_image(image, height, width, blur, max_width, crop, show_small_image, quality, webp)

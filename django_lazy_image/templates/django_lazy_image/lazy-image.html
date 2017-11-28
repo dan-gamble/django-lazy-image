@@ -3,7 +3,10 @@
     <div class="img-Image_AspectRatio" style="padding-bottom: {{ aspect_ratio }}"></div>
 
     <div class="img-Image_Media">
-      <img class="img-Image_Image img-Image_Image-small img-Image_Image-loaded{% if blur %}  img-Image_Image-blurred{% endif %}" alt="" src="{{ small_image_url }}">
+      {% if show_small_image %}
+        <img class="img-Image_Image img-Image_Image-small img-Image_Image-loaded{% if blur %}  img-Image_Image-blurred{% endif %}" alt="" src="{{ small_image_url }}">
+      {% endif %}
+    
       <picture>
         {% if webp %}
           <source srcset="{{ webp_url }}, {{ webp_url_2x }} 2x" type="image/webp">
