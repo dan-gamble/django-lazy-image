@@ -68,7 +68,8 @@ if (lazyImage) {
   const callback = (entries, observer) => {
     Array.from(entries).forEach((entry, index) => {
       // If any of the images have come in to view, activate them sequentially
-      if (entry.isIntersecting) {
+      if (entry.isIntersecting && !entry.target.dataset.activating) {
+        entry.target.dataset.activating = true
         window.setTimeout(() => {
           new LazyImage({ el: entry.target })
           observer.unobserve(entry.target)
