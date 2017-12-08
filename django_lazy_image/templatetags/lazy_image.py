@@ -122,7 +122,7 @@ def lazy_image(
 @library.global_function
 @library.render_with('django_lazy_image/lazy-image.html')
 def render_lazy_image(image, height=None, width=None, blur=True, max_width=1920, crop=None, show_small_image=True,
-                      quality=settings.LAZY_IMAGE_DEFAULT_QUALITY, webp=settings.LAZY_IMAGE_ENABLE_WEBP):
+                      quality=settings.LAZY_IMAGE_DEFAULT_QUALITY_OPTIONS, webp=settings.LAZY_IMAGE_ENABLE_WEBP):
     """
     Usage: {{ render_lazy_image(path.to.image) }}
     """
