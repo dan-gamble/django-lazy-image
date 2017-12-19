@@ -11,11 +11,13 @@ export default class LazyImage {
       this.image.addEventListener('load', () => {
         this.image.classList.add(this.loadedClass)
       })
-      this.image.addEventListener('transitionend', evt => {
-        if (evt.propertyName === 'opacity') {
-          this.smallImage.parentNode.removeChild(this.smallImage)
-        }
-      })
+      if (this.smallImage) {
+        this.image.addEventListener('transitionend', evt => {
+          if (evt.propertyName === 'opacity') {
+            this.smallImage.parentNode.removeChild(this.smallImage)
+          }
+        })
+      }
 
       this.image.setAttribute('src', this.src.join(', '))
     } else {

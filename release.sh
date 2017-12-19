@@ -25,5 +25,6 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   git push
   git checkout master
   git push --tags && git push
+  git checkout develop
   unset GIT_MERGE_AUTOEDIT
 fi
