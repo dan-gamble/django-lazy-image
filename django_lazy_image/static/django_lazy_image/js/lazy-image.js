@@ -27,11 +27,13 @@ var LazyImage = function LazyImage(_ref) {
     this.image.addEventListener('load', function () {
       _this.image.classList.add(_this.loadedClass);
     });
-    this.image.addEventListener('transitionend', function (evt) {
-      if (evt.propertyName === 'opacity') {
-        _this.smallImage.parentNode.removeChild(_this.smallImage);
-      }
-    });
+    if (this.smallImage) {
+      this.image.addEventListener('transitionend', function (evt) {
+        if (evt.propertyName === 'opacity') {
+          _this.smallImage.parentNode.removeChild(_this.smallImage);
+        }
+      });
+    }
 
     this.image.setAttribute('src', this.src.join(', '));
   } else {
