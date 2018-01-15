@@ -1,4 +1,4 @@
-<div class="img-Image{% if is_transparent %} img-Image-isTransparent{% endif %} js-LazyImage">
+<div class="img-Image{% if is_transparent %} img-Image-isTransparent{% endif %} js-LazyImage"{% if responsive_aspects %} data-responsive-aspects="{{ responsive_aspects }}"{% endif %}>
   <div class="img-Image_AspectRatioHolder">
     <div class="img-Image_AspectRatio" style="padding-bottom: {{ aspect_ratio }}"></div>
 
