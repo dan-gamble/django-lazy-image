@@ -1,5 +1,7 @@
 # pylint: disable=too-complex, too-many-arguments, too-many-locals
 
+import json
+
 from django.core.urlresolvers import reverse
 from django_jinja import library
 
@@ -9,7 +11,8 @@ from ..conf import settings
 @library.global_function
 def lazy_image(
         image, height=None, width=None, blur=True, max_width=1920, crop=None, show_small_image=True,
-        quality=settings.LAZY_IMAGE_DEFAULT_QUALITY, webp=settings.LAZY_IMAGE_ENABLE_WEBP):
+        quality=settings.LAZY_IMAGE_DEFAULT_QUALITY, webp=settings.LAZY_IMAGE_ENABLE_WEBP,
+        responsive_sizes=None):
     user_sized = height and width
     reverse_url = '{}:thumbnail'.format(settings.LAZY_IMAGE_URL_NAMESPACE)
 
@@ -26,24 +29,27 @@ def lazy_image(
     if user_sized and not crop:
         crop = 'center'
 
-    # Ideally we will use the images uploaded sizes to get our aspect ratio but in certain circumstances, like cards,
-    # we will use our own provided ones
-    if not height:
-        height = image.height
+    width, height, aspect_ratio = calculate_width_and_height(
+        width, height, image, user_sized, max_width
+    )
 
-    if not width:
-        width = image.width
+    responsize_aspects = {}
 
-    aspect_ratio = height / width if user_sized else image.height / image.width
+    if responsive_sizes:
+        responsize_aspects['default'] = f'{aspect_ratio * 100}%'
 
-    if width > max_width:
-        width = max_width
-
-    if width > height:
-        height = int(width * aspect_ratio)
+        for key, value in responsive_sizes.items():
+            sizes = calculate_width_and_height(
+                value['width'],
+                value['height'],
+                image,
+                True,
+                max_width
+            )
+            responsize_aspects[key] = f'{sizes[2] * 100}%'
 
     # The aspect ratio will be used to size the image with a padding-bottom based element
-    aspect_ratio_percentage = '{}%'.format(aspect_ratio * 100)
+    aspect_ratio_percentage = f'{aspect_ratio * 100}%'
 
     original_large_image_url = reverse(reverse_url, kwargs={
         'pk': image.pk,
@@ -116,15 +122,37 @@ def lazy_image(
         'blur': blur,
         'show_small_image': show_small_image,
         'is_transparent': str(image.file).endswith('.png'),
+        'responsive_aspects': json.dumps(responsize_aspects) if responsive_sizes else None,
     }
 
 
 @library.global_function
 @library.render_with('django_lazy_image/lazy-image.html')
 def render_lazy_image(image, height=None, width=None, blur=True, max_width=1920, crop=None, show_small_image=True,
-                      quality=settings.LAZY_IMAGE_DEFAULT_QUALITY_OPTIONS, webp=settings.LAZY_IMAGE_ENABLE_WEBP):
+                      quality=settings.LAZY_IMAGE_DEFAULT_QUALITY_OPTIONS, webp=settings.LAZY_IMAGE_ENABLE_WEBP,
+                      responsive_sizes=None):
     """
     Usage: {{ render_lazy_image(path.to.image) }}
     """
 
-    return lazy_image(image, height, width, blur, max_width, crop, show_small_image, quality, webp)
+    return lazy_image(image, height, width, blur, max_width, crop, show_small_image, quality, webp, responsive_sizes)
+
+
+def calculate_width_and_height(width, height, image, user_sized, max_width):
+    # Ideally we will use the images uploaded sizes to get our aspect ratio but in certain circumstances, like cards,
+    # we will use our own provided ones
+    if not height:
+        height = image.height
+
+    if not width:
+        width = image.width
+
+    aspect_ratio = height / width if user_sized else image.height / image.width
+
+    if width > max_width:
+        width = max_width
+
+    if width > height:
+        height = int(width * aspect_ratio)
+
+    return [width, height, aspect_ratio]
