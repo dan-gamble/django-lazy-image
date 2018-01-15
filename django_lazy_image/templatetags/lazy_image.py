@@ -39,14 +39,14 @@ def lazy_image(
         responsize_aspects['default'] = f'{aspect_ratio * 100}%'
 
         for key, value in responsive_sizes.items():
-            res_width, res_height, res_aspect_ratio = calculate_width_and_height(
+            sizes = calculate_width_and_height(
                 value['width'],
                 value['height'],
                 image,
                 True,
                 max_width
             )
-            responsize_aspects[key] = f'{res_aspect_ratio * 100}%'
+            responsize_aspects[key] = f'{sizes[2] * 100}%'
 
     # The aspect ratio will be used to size the image with a padding-bottom based element
     aspect_ratio_percentage = f'{aspect_ratio * 100}%'
