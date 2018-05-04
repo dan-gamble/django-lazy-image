@@ -11,7 +11,7 @@ clean:
 	rm -rf dist/* build/*
 
 dev:
-  pip install pip -U
+	pip install pip -U
 	pip install twine
 	pip install -e .[testing]
 
