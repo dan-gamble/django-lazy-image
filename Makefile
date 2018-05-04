@@ -22,5 +22,5 @@ package:
 	python setup.py sdist bdist_wheel
 
 test:
-	pylint django_lazy_image/ --load-plugins pylint_django,pylint_mccabe --ignore=migrations,tests -d missing-docstring,invalid-name,no-init,too-many-ancestors,no-member,line-too-long,attribute-defined-outside-init,too-few-public-methods,no-self-use,unused-argument,protected-access,locally-disabled,duplicate-code,ungrouped-imports,not-context-manager,fixme --reports=n
+	pylint django_lazy_image/ --load-plugins pylint_django,pylint.extensions.mccabe --ignore=migrations,tests -d missing-docstring,invalid-name,no-init,too-many-ancestors,no-member,line-too-long,attribute-defined-outside-init,too-few-public-methods,no-self-use,unused-argument,protected-access,locally-disabled,duplicate-code,ungrouped-imports,not-context-manager,fixme --reports=n
 	isort --check-only --diff --quiet --skip-glob=venv
