@@ -9,7 +9,7 @@ LAZY_IMAGE_DEFAULT_QUALITY = LAZY_IMAGE_DEFAULT_QUALITY_OPTIONS['normal']
 LAZY_IMAGE_URL_NAMESPACE = 'assets'
 
 # This is the file model that Sorl is expecting to create a thumbnail from
-LAZY_IMAGE_FILE_MODEL = 'media.File'
+LAZY_IMAGE_OSM_FILE_MODEL = 'media.File'
 
 # Do you want the lazy images to server webp where possible?
 LAZY_IMAGE_ENABLE_WEBP = True
